@@ -141,11 +141,11 @@ def run_iterations(A, B, L, U, b, max_iter = 300, eps = 1e-4):
 
     x = np.random.randn(n)
     lam = np.random.randn(m)
-
+    #Check the bottom of the script for the run_iterations for the x_norm feasibility problem
     storage = {"x" : [], "lam" : [], "obj" : [], "sign" : [], "residual_obj" : [], "residual_x" : []}
 
     for i in range (max_iter):
-
+        #To change this to simple ADMM updates we remove the conditions and set sign_k = 1.0
         if i % 2 == 0:
             sign_k = 1.0
         else:
@@ -315,12 +315,39 @@ plt.savefig("Average XNorm Residual.pdf", bbox_inches = "tight")
 
 
 
+#Note this following run iterations was used for the x_norm updates
+# def run_iterations(A, B, L, U, b, max_iter = 300, eps = 1e-4):
+#     optimal_obj, optimal_x = solve_cvxpy(A, B, b)
+#     n = A.shape[1]
+#     m = A.shape[0]
 
+#     x = np.random.randn(n)
+#     lam = np.random.randn(m)
 
+#     storage = {"x" : [], "lam" : [], "obj" : [], "sign" : [], "residual_obj" : [], "residual_x" : []}
 
-    # M = np.random.randn(n,n)
-    # B = M @ M.T
+#     for i in range (max_iter):
 
-    # evals, evecs = np.linalg.eigh(B)
-    # evals = np.clip(evals,1e-3, None)
-    # return evecs @ np.diag(evals) @ evecs.T
+#         if i % 2 == 0:
+#             sign_k = 1.0
+#         else:
+#             sign_k = -1.0
+
+#         storage["sign"].append(sign_k)
+
+#         x, lam = iterate(x, lam, A, sign_k, L, U, b)
+#         storage["x"].append(x.copy())
+#         storage["lam"].append(lam.copy())
+#         storage["obj"].append(objective(x, B))
+#         storage["residual_obj"].append(abs(objective(x, B) - optimal_obj))
+#         storage["residual_x"].append(np.linalg.norm(x - optimal_x))
+
+#         print(f"Iter {i:03d} | sign={sign_k:+.0f} | obj={objective(x, B):.6f}")
+#         print(f"x = {x}")
+#         print(f"λ = {lam}\n")
+
+#         if abs(objective(x, B) - optimal_obj) < eps:
+#             break
+
+#     return storage
+
