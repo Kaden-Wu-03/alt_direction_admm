@@ -23,13 +23,7 @@ def create_B(n, seed):
     if seed is not None:
         np.random.seed(seed)
 
-    M = np.random.randn(n,n)
-    B = M @ M.T
-
-    evals, evecs = np.linalg.eigh(B)
-    evals = np.clip(evals,1e-3, None)
-    return evecs @ np.diag(evals) @ evecs.T
-
+    B = np.eye(n)
     return B
 
 def create_A(n, seed):
